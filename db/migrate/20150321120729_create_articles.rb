@@ -4,6 +4,7 @@ class CreateArticles < ActiveRecord::Migration
       t.string :title
       t.text :body
       t.string :image_url
+      t.references :user, index: true
 
       t.timestamps
     end

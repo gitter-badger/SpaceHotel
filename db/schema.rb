@@ -17,9 +17,12 @@ ActiveRecord::Schema.define(version: 20150321185822) do
     t.string   "title"
     t.text     "body"
     t.string   "image_url"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"

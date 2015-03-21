@@ -9,6 +9,13 @@
 %p
   %b Image url:
   = @article.image_url
+%p
+  %b User id:
+  = @article.user_id
+
+%p
+  %b User name:
+  = @article.user.first_name
 
 = link_to 'Edit', edit_article_path(@article)
 \|
