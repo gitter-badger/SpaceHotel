@@ -12,4 +12,10 @@
  *
  *= require_tree .
  *= require_self
- */
+*/
+
+@import "bootsy";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "devise";
+

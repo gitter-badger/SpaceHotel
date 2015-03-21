@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -11,11 +13,12 @@ Rails.application.routes.draw do
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'productsid/purchase' => 'catalog#purchase', as: :purchase
 
-  root 'welcome#index'
+  root 'articles#index'
 
   devise_for :users, controllers: { registrations: 'registrations' }
 
   resources :users
+  resources :articles
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
