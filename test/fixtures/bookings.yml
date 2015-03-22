@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  arrival: 2015-03-22
+  departure: 2015-03-22
+
+two:
+  arrival: 2015-03-22
+  departure: 2015-03-22

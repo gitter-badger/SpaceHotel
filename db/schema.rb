@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150322093228) do
+ActiveRecord::Schema.define(version: 20150322133956) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -26,6 +26,20 @@ ActiveRecord::Schema.define(version: 20150322093228) do
   end
 
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
+
+  create_table "bookings", force: true do |t|
+    t.date     "arrival"
+    t.date     "departure"
+    t.integer  "user_id"
+    t.integer  "room_id"
+    t.integer  "status_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "bookings", ["room_id"], name: "index_bookings_on_room_id", using: :btree
+  add_index "bookings", ["status_id"], name: "index_bookings_on_status_id", using: :btree
+  add_index "bookings", ["user_id"], name: "index_bookings_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -51,6 +65,12 @@ ActiveRecord::Schema.define(version: 20150322093228) do
   add_index "rooms", ["specification_id"], name: "index_rooms_on_specification_id", using: :btree
 
   create_table "specifications", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "statuses", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"

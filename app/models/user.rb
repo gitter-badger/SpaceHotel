@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   after_initialize :init
 
   belongs_to :role
+  has_many :bookings
 
   def init
     self.role = Role.find_by_name("customer") unless self.role

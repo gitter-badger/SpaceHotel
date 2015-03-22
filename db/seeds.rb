@@ -11,3 +11,4 @@ puts 'CREATED ADMIN USER: ' << user.email
 Role.create([{name: 'customer'}, {name: 'admin'}, {name: 'super_admin'}])
 
 Specification.create([{name: 'econom'}, {name: 'standart'}, {name: 'luxury'}])
+Status.create([{name: 'occupied'}, {name: 'reserved'}, {name: 'unavailable'}])
