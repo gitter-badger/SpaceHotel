@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @room.name
+%p
+  %b Price:
+  = @room.price
+%p
+  %b Image:
+  = image_tag @room.image.url(:medium)
+%p
+  %b Size:
+  = @room.size
+%p
+  %b Description:
+  = @room.description
+%p
+  %b Occupancy:
+  = @room.occupancy
+
+= link_to 'Edit', edit_room_path(@room)
+\|
+= link_to 'Back', rooms_path

@@ -10,10 +10,10 @@
     = f.label :title
     = f.text_field :title
   .field
-    = f.label :body
-    = f.bootsy_area :body, style: "width: 50%; height: 300px"
+    = f.label :content
+    = f.bootsy_area :content, style: "width: 50%; height: 300px"
   .field
-    = f.label :image_url
-    = f.text_field :image_url
+    = f.label :image
+    = f.file_field :image
   .actions
     = f.submit 'Save'

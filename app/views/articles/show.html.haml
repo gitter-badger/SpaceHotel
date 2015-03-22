@@ -4,11 +4,11 @@
   %b Title:
   = @article.title
 %p
-  %b Body:
-  = @article.body.html_safe
+  %b Content:
+  = @article.content.html_safe
 %p
   %b Image url:
-  = @article.image_url
+  = image_tag @article.image.url(:medium)
 %p
   %b User id:
   = @article.user_id

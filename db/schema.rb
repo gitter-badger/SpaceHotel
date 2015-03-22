@@ -11,20 +11,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321185822) do
+ActiveRecord::Schema.define(version: 20150322093228) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
-    t.text     "body"
-    t.string   "image_url"
+    t.text     "content"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rooms", force: true do |t|
+    t.string   "name"
+    t.float    "price",              limit: 24
+    t.float    "size",               limit: 24
+    t.text     "description"
+    t.integer  "occupancy"
+    t.integer  "specification_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  add_index "rooms", ["specification_id"], name: "index_rooms_on_specification_id", using: :btree
+
+  create_table "specifications", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"

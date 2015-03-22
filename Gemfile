@@ -18,6 +18,7 @@ gem 'haml-rails'
 gem 'devise'
 gem 'cancan'
 gem 'bootsy'
+gem 'paperclip'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
