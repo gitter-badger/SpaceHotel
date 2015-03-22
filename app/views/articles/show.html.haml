@@ -14,8 +14,20 @@
   = @article.user_id
 
 %p
-  %b User name:
+  %b User user:
   = @article.user.first_name
+
+%p
+  %b User admin:
+  = @article.user.admin?
+
+%p
+  %b User super_admin:
+  = @article.user.super_admin?
+
+%p
+  %b Customer:
+  = @article.user.customer?
 
 = link_to 'Edit', edit_article_path(@article)
 \|

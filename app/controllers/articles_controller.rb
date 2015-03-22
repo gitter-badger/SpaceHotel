@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_filter :check_permissions, :only => [:new, :create, :destroy, :edit, :update]
 
   respond_to :html
 
@@ -44,5 +45,9 @@ class ArticlesController < ApplicationController
 
     def article_params
       params.require(:article).permit(:title, :body, :image_url)
+    end
+
+    def check_permissions
+      authorize! [:update, :create, :delete], @article
     end
 end

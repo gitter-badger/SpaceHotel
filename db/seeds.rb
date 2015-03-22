@@ -8,5 +8,5 @@
 user = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << user.email
 
-Role.create([{name: "user"},{name: "admin"},{name: "super_admin"}])
+Role.create([{name: "customer"}, {name: "admin"}, {name: "super_admin"}])
 

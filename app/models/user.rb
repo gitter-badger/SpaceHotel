@@ -4,7 +4,19 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :role
-  has_many :articles
+  after_initialize :init
 
+  belongs_to :role
+
+  def init
+    self.role = Role.find_by_name("customer") unless self.role
+
+    Role.all.each do |r|
+      eval %Q"
+           def #{r.name}?
+             self.role_id == #{r.id}
+           end
+           "
+    end
+  end
 end
