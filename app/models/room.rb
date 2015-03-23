@@ -1,7 +1,7 @@
 class Room < ActiveRecord::Base
 
   belongs_to :specification
-  has_many :rooms
+  has_many :bookings
 
   validates :image,
             attachment_content_type: { content_type: /\Aimage\/.*\Z/ },

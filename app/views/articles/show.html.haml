@@ -6,9 +6,7 @@
 %p
   %b Content:
   = @article.content.html_safe
-%p
-  %b Image url:
-  = image_tag @article.image.url(:medium)
+
 %p
   %b User id:
   = @article.user_id

@@ -18,6 +18,9 @@
 %p
   %b Occupancy:
   = @room.occupancy
+%p
+  %b Specification:
+  = @room.specification.name
 
 = link_to 'Edit', edit_room_path(@room)
 \|

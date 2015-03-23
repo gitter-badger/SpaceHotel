@@ -27,10 +27,9 @@
         %td= booking.room.size
         %td= booking.room.occupancy
         %td= booking.status.name
-        %td= link_to 'Show', booking
-        %td= link_to 'Edit', edit_booking_path(booking)
-        %td= link_to 'Destroy', booking, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= link_to 'Show', room_booking_path(booking.room, booking)
+        %td= link_to 'Edit', edit_room_booking_path(booking.room, booking)
+        %td= link_to 'Destroy', room_booking_path(booking.room, booking), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
-
-= link_to 'New Booking', new_booking_path
+= link_to 'New Booking', new_room_booking_path

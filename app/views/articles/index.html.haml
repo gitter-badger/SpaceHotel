@@ -5,7 +5,6 @@
     %tr
       %th Title
       %th Content
-      %th Image url
       %th
       %th
       %th
@@ -15,7 +14,6 @@
       %tr
         %td= article.title
         %td= article.content.html_safe
-        %td= image_tag article.image.url(:medium)
         %td= link_to 'Show', article
         - if can? [:update, :destroy], Article
           %td= link_to 'Edit', edit_article_path(article)

@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     @rooms = Room.all
@@ -42,6 +42,6 @@ class RoomsController < ApplicationController
     end
 
     def room_params
-      params.require(:room).permit(:name, :price, :image, :size, :description, :occupancy, :image)
+      params.require(:room).permit(:name, :price, :image, :size, :description, :occupancy, :image, :specification_id)
     end
 end

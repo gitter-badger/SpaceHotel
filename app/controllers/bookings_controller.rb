@@ -1,48 +1,53 @@
 class BookingsController < ApplicationController
+
+  before_action :set_room
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
-    @bookings = Booking.all
-    respond_with(@bookings)
+    @bookings = @room.bookings
+    respond_with(@room)
   end
 
   def show
-    respond_with(@booking)
+    @room = Room.find(params[:room_id])
+    respond_with(@room, @booking)
   end
 
   def new
-    @booking = Booking.new
-    @room = Room.find(params[:room_id])
-    @booking.room = @room
-    @booking.save
-    respond_with(@booking)
+    @booking = @room.bookings.build
+    respond_with(@room, @booking)
   end
 
   def edit
   end
 
   def create
-    @booking = Booking.new(booking_params)
+    @booking = @room.bookings.create(booking_params)
     @booking.user = current_user
     @booking.save
-    respond_with(@booking)
+    respond_with(@room, @booking)
   end
 
   def update
     @booking.update(booking_params)
-    respond_with(@booking)
+    respond_with(@room, @booking)
   end
 
   def destroy
     @booking.destroy
-    respond_with(@booking)
+    respond_with(@room, @booking)
   end
 
   private
+
+    def set_room
+      @room = Room.find(params[:room_id])
+    end
+
     def set_booking
-      @booking = Booking.find(params[:id])
+      @booking = @room.bookings.find(params[:id])
     end
 
     def booking_params

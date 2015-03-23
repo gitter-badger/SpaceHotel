@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :bookings
+  # resources :bookings
 
-  resources :rooms
+  resources :rooms do
+    resources :bookings
+  end
 
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   # The priority is based upon order of creation: first created -> highest priority.

@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   before_filter :check_permissions, :only => [:new, :create, :destroy, :edit, :update]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     @articles = Article.all
@@ -44,7 +44,7 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:title, :content, :image)
+      params.require(:article).permit(:title, :content, :bootsy_image_gallery_id)
     end
 
     def check_permissions

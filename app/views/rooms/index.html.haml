@@ -9,6 +9,7 @@
       %th Size
       %th Description
       %th Occupancy
+      %th Specification
       %th
       %th
       %th
@@ -22,10 +23,12 @@
         %td= room.size
         %td= room.description
         %td= room.occupancy
+        %td= room.specification.name
         %td= link_to 'Show', room
         %td= link_to 'Edit', edit_room_path(room)
         %td= link_to 'Destroy', room, :method => :delete, :data => { :confirm => 'Are you sure?' }
-        %td= link_to 'Book', new_booking_path(room_id: room.id)
+        %td= link_to 'Book', new_room_booking_path(room)
+        %td= link_to 'Bookings', room_bookings_path(room)
 
 %br
 
