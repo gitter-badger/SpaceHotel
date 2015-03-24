@@ -12,7 +12,7 @@
   .field
     = f.label :departure
     = f.date_select :departure
-  - unless current_user
+  - unless user_signed_in?
     .field
       = label_tag :first_name
       = text_field_tag :first_name
@@ -25,7 +25,6 @@
   .field
     = label_tag :payment_card
     = text_field_tag :payment_card
-
   .field
     = f.label :status_id
     = f.number_field :status_id

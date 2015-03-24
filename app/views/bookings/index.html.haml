@@ -21,7 +21,7 @@
         %td= booking.id
         %td= booking.arrival
         %td= booking.departure
-        %td= booking.user
+        %td= booking.user.email
         %td= booking.room.name
         %td= booking.room.price
         %td= booking.room.size
@@ -31,5 +31,4 @@
         %td= link_to 'Edit', edit_room_booking_path(booking.room, booking)
         %td= link_to 'Destroy', room_booking_path(booking.room, booking), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
-= link_to 'New Booking', new_room_booking_path
+

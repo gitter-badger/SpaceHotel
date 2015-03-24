@@ -3,8 +3,14 @@ Rails.application.routes.draw do
   # resources :bookings
 
   resources :rooms do
-    resources :bookings
+    resources :bookings#, :except => [:index]
   end
+  get '/bookings/all' => 'bookings#index', as: 'all_bookings'
+
+  devise_for :users, controllers: { registrations: 'registrations' }, :path => ''
+
+  resources :users
+  resources :articles
 
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   # The priority is based upon order of creation: first created -> highest priority.
@@ -21,10 +27,7 @@ Rails.application.routes.draw do
 
   root 'articles#index'
 
-  devise_for :users, controllers: { registrations: 'registrations' }
 
-  resources :users
-  resources :articles
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 

@@ -10,14 +10,12 @@ class User < ActiveRecord::Base
   has_many :bookings
 
   def init
-    self.role = Role.find_by_name("customer") unless self.role
-
-    Role.all.each do |r|
-      eval %Q"
-           def #{r.name}?
-             self.role_id == #{r.id}
+    %w[customer admin super_admin].each_with_index do |r, i|
+      eval <<-RUBY
+           def #{r}?
+             self.role_id == #{i+1}
            end
-           "
+           RUBY
     end
   end
 end

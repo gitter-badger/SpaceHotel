@@ -19,10 +19,6 @@ ActiveRecord::Schema.define(version: 20150323152024) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
   end
 
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
@@ -105,7 +101,7 @@ ActiveRecord::Schema.define(version: 20150323152024) do
     t.datetime "updated_at"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "role_id"
+    t.integer  "role_id",                default: 1,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
