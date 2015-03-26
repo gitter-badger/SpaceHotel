@@ -13,12 +13,18 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
+gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
 gem 'haml-rails'
 gem 'devise'
 gem 'cancan'
 gem 'bootsy'
 gem 'paperclip'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+gem 'filterrific'
+gem 'chardinjs-rails'
+gem 'bootstrap-slider-rails'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

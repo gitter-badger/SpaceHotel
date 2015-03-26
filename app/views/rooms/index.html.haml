@@ -1,35 +1,25 @@
-%h1 Listing rooms
+.well
+  = form_for_filterrific @filterrific do |f|
+    .row
+      .col-md-3
+        .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by type.' }
+          %label Specification
+          = f.select :with_specification_id,
+                     @filterrific.select_options[:with_specification_id],
+                     { :include_blank => 'Any' },
+                     { :class => 'form-control' }
+      .col-md-2
+        .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by registration date.' }
+          %label Registered after
+          = f.text_field :with_created_at_gte,
+                         :class => 'js-datepicker form-control'
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Price
-      %th Image
-      %th Size
-      %th Description
-      %th Occupancy
-      %th Specification
-      %th
-      %th
-      %th
+#results
+  = render 'list'
 
-  %tbody
-    - @rooms.each do |room|
-      %tr
-        %td= room.name
-        %td= room.price
-        %td= image_tag room.image.url(:medium)
-        %td= room.size
-        %td= room.description
-        %td= room.occupancy
-        %td= room.specification.name
-        %td= link_to 'Show', room
-        %td= link_to 'Edit', edit_room_path(room)
-        %td= link_to 'Destroy', room, :method => :delete, :data => { :confirm => 'Are you sure?' }
-        %td= link_to 'Book', new_room_booking_path(room)
-        %td= link_to 'Bookings', room_bookings_path(room)
-
-%br
-
-= link_to 'New Room', new_room_path
+:javascript
+  $('.js-datepicker').datepicker();
+  $('#overlayTrigger').click(function(event) {
+    event.preventDefault();
+    $('body').chardinJs('start');
+  });

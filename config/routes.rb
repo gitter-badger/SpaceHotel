@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :bookings#, :except => [:index]
   end
-  get '/bookings/all' => 'bookings#index', as: 'all_bookings'
+  get '/bookings' => 'bookings#index', as: 'all_bookings'
 
   devise_for :users, controllers: { registrations: 'registrations' }, :path => ''
 

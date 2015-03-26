@@ -1,7 +1,7 @@
 %h1 Something is going in Space Hotel
 
-%table
-  %thead
+.well
+  %table
     %tr
       %th Title
       %th Content
@@ -9,7 +9,6 @@
       %th
       %th
 
-  %tbody
     - @articles.each do |article|
       %tr
         %td= article.title

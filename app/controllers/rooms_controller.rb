@@ -4,8 +4,18 @@ class RoomsController < ApplicationController
   respond_to :html, :json
 
   def index
-    @rooms = Room.all
-    respond_with(@rooms)
+    (@filterrific = initialize_filterrific(
+        Room,
+        params[:filterrific],
+        :select_options => {
+            with_specification_id: Specification.options_for_select
+        }
+    )) or return
+    @rooms = @filterrific.find.page(params[:page])
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show

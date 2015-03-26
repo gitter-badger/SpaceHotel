@@ -25,7 +25,7 @@ class BookingsController < ApplicationController
 
   def create
     @booking = @room.bookings.create(booking_params)
-    if current_user
+    if user_signed_id?
       @booking.user = current_user
     else
       generated_password = Devise.friendly_token.first(8)

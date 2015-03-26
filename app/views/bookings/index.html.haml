@@ -1,7 +1,7 @@
 %h1 Listing bookings
 
-%table
-  %thead
+.well
+  %table.table
     %tr
       %th ID
       %th Arrival
@@ -14,8 +14,7 @@
       %th Status
       %th
       %th
-
-  %tbody
+      %th
     - @bookings.each do |booking|
       %tr
         %td= booking.id

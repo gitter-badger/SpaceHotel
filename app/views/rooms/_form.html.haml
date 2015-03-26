@@ -20,7 +20,7 @@
     = f.text_field :size
   .field
     = f.label :description
-    = f.text_area :description
+    = f.bootsy_area :description, cols: 90, rows: 10
   .field
     = f.label :occupancy
     = f.text_field :occupancy
@@ -29,3 +29,9 @@
     = f.number_field :specification_id
   .actions
     = f.submit 'Save'
+
+:javascript
+  $(document).on("ready page:load", function() {
+    $("#price-slider").slider();
+    $("#size-slider").slider();
+  })
