@@ -8,7 +8,8 @@ class RoomsController < ApplicationController
         Room,
         params[:filterrific],
         :select_options => {
-            with_specification_id: Specification.options_for_select
+            with_specification: Specification.options_for_select,
+            sort_by: Room.options_for_sorted_by
         }
     )) or return
     @rooms = @filterrific.find.page(params[:page])

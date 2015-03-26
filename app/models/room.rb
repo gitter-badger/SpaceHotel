@@ -1,11 +1,12 @@
 class Room < ActiveRecord::Base
 
-  filterrific :default_filter_params => { :sorted_by => 'created_at_desc' },
+  filterrific :default_filter_params => {sort_by: 'price_desc'},
               :available_filters => %w[
-                sorted_by
-                search_query
-                with_specification_id
-                with_created_at_gte
+                sort_by
+                with_specification
+                with_price
+                with_size
+                with_occupancy
               ]
 
   belongs_to :specification
@@ -21,19 +22,57 @@ class Room < ActiveRecord::Base
                                medium: '300x300>'
                            }
 
-  scope :sorted_by, lambda { |sort_option|
-                    # extract the sort direction from the param value.
+  def self.options_for_sorted_by
+    [
+        ['Expensive first', 'price_desc'],
+        ['Cheaper first', 'price_acs'],
+        ['Larger first', 'size_desc'],
+        ['Cheaper first', 'size_asc'],
+        ['For more persons first', 'occupancy_desc'],
+        ['For less persons first', 'occupancy_asc']
+    ]
+  end
+
+  scope :sort_by, lambda { |sort_option|
+                    p sort_option
                     direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
                     case sort_option.to_s
                       when /^created_at_/
                         order("rooms.created_at #{ direction }")
-                     else
+                      when /^price_/
+                        order("rooms.price #{ direction }")
+                      when /^size_/
+                        order("rooms.size #{ direction }")
+                      when /^occupancy_/
+                        order("rooms.occupancy #{ direction }")
+                      else
                         raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
                     end
                   }
 
-  scope :with_specification_id, lambda { |specification_ids|
-                          where(:specification_id => [*specification_ids])
-                        }
+  scope :with_specification,
+        lambda { |specification_ids|
+          ids = specification_ids.marshal_dump.delete_if { |key, value| value == "0" }.keys
+          where(:specification_id => ids)
+        }
+
+  scope :with_price,
+        lambda { |prices|
+          range = prices.split(',')
+          where('rooms.price >= ? AND rooms.price <= ?', range[0], range[1])
+        }
+
+  scope :with_size,
+        lambda { |sizes|
+          range = sizes.split(',')
+          where('rooms.size >= ? AND rooms.size <= ?', range[0], range[1])
+        }
+
+
+  scope :with_occupancy,
+        lambda { |occupancy|
+          range = occupancy.split(',')
+          where('rooms.occupancy >= ? AND rooms.occupancy <= ?', range[0], range[1])
+        }
 
 end

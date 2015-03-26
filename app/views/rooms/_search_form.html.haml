@@ -1,11 +1,50 @@
-.well
-  Price:
-  %b € 10
-  %input#price-slider.span2{'data-slider-max' => "200", 'data-slider-min' => "10", 'data-slider-step' => "1", 'data-slider-value' => '[10,200]', :type => "text", :value => "range"}/
-  %b € 200
-  %br
-  Size:
-  %b 15
-  %input#size-slider.span2{'data-slider-max' => "150", 'data-slider-min' => "15", 'data-slider-step' => ".5", 'data-slider-value' => '[15,150]', :type => "text", :value => "range"}/
-  %b 150
+= form_for_filterrific @filterrific do |f|
+  = f.label :with_specification
+  = f.fields_for :with_specification, @filterrific.with_specification do |element|
+    - @filterrific.select_options[:with_specification].each do |specification|
+      %br
+      = element.label specification[0]
+      = element.check_box specification[1], checked: true
+  %br= f.label :with_price
+  = f.text_field :with_price, class: 'filterrific-periodically-observed span2', id: 'price-slider'
+  %br= f.label :with_size
+  = f.text_field :with_size,  class: 'filterrific-periodically-observed span2', id: 'size-slider'
+  %br= f.label :with_occupancy
+  = f.text_field :with_occupancy,  class: 'filterrific-periodically-observed span2', id: 'occupancy-slider'
+  %br= f.label :sort_by
+  = f.select :sort_by, @filterrific.select_options[:sort_by], class: 'form-control'
 
+:javascript
+
+  $(document).on("ready page:load", function() {
+    priceSlider = $("#price-slider").slider(
+    {
+      min: 10,
+      max: 200,
+      range: true,
+      value: [10, 200],
+      step: 1
+    });
+    sizeSlider = $("#size-slider").slider(
+    {
+      min: 15,
+      max: 150,
+      range: true,
+      value: [15, 150],
+      step: .5
+    });
+    occupancySlider = $("#occupancy-slider").slider(
+    {
+      min: 1,
+      max: 8,
+      range: true,
+      value: [1, 8],
+      step: 1
+    });
+  })
+
+  $('.js-datepicker').datepicker();
+  $('#overlayTrigger').click(function(event) {
+    event.preventDefault();
+    $('body').chardinJs('start');
+  });

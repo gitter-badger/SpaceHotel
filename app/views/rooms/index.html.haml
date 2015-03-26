@@ -1,25 +1,5 @@
 .well
-  = form_for_filterrific @filterrific do |f|
-    .row
-      .col-md-3
-        .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by type.' }
-          %label Specification
-          = f.select :with_specification_id,
-                     @filterrific.select_options[:with_specification_id],
-                     { :include_blank => 'Any' },
-                     { :class => 'form-control' }
-      .col-md-2
-        .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by registration date.' }
-          %label Registered after
-          = f.text_field :with_created_at_gte,
-                         :class => 'js-datepicker form-control'
+  = render 'search_form'
 
 #results
   = render 'list'
-
-:javascript
-  $('.js-datepicker').datepicker();
-  $('#overlayTrigger').click(function(event) {
-    event.preventDefault();
-    $('body').chardinJs('start');
-  });
