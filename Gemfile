@@ -25,6 +25,7 @@ gem 'will_paginate-bootstrap'
 gem 'filterrific'
 gem 'chardinjs-rails'
 gem 'bootstrap-slider-rails'
+gem 'jquery-turbolinks'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

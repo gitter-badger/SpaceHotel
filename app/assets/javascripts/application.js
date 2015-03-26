@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootsy
 //= require turbolinks
@@ -20,4 +21,5 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.en-GB.js
 //= require filterrific/filterrific-jquery
 //= require chardinjs
+//= require turbolinks
 //= require_tree .

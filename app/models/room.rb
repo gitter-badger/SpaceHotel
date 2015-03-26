@@ -33,46 +33,40 @@ class Room < ActiveRecord::Base
     ]
   end
 
-  scope :sort_by, lambda { |sort_option|
-                    p sort_option
-                    direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
-                    case sort_option.to_s
-                      when /^created_at_/
-                        order("rooms.created_at #{ direction }")
-                      when /^price_/
-                        order("rooms.price #{ direction }")
-                      when /^size_/
-                        order("rooms.size #{ direction }")
-                      when /^occupancy_/
-                        order("rooms.occupancy #{ direction }")
-                      else
-                        raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
-                    end
-                  }
+  scope :sort_by, -> (sort_option) {
+    direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
+    case sort_option.to_s
+      when /^created_at_/
+        order("rooms.created_at #{ direction }")
+      when /^price_/
+        order("rooms.price #{ direction }")
+      when /^size_/
+        order("rooms.size #{ direction }")
+      when /^occupancy_/
+        order("rooms.occupancy #{ direction }")
+      else
+        raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
+    end
+  }
 
-  scope :with_specification,
-        lambda { |specification_ids|
-          ids = specification_ids.marshal_dump.delete_if { |key, value| value == "0" }.keys
-          where(:specification_id => ids)
-        }
+  scope :with_specification, -> (specification_ids) {
+    ids = specification_ids.marshal_dump.delete_if { |key, value| value == "0" }.keys
+    where(:specification_id => ids)
+  }
 
-  scope :with_price,
-        lambda { |prices|
-          range = prices.split(',')
-          where('rooms.price >= ? AND rooms.price <= ?', range[0], range[1])
-        }
+  scope :with_price, -> (prices) {
+    range = prices.split(',')
+    where('rooms.price >= ? AND rooms.price <= ?', range[0], range[1])
+  }
 
-  scope :with_size,
-        lambda { |sizes|
-          range = sizes.split(',')
-          where('rooms.size >= ? AND rooms.size <= ?', range[0], range[1])
-        }
+  scope :with_size, -> (sizes) {
+    range = sizes.split(',')
+    where('rooms.size >= ? AND rooms.size <= ?', range[0], range[1])
+  }
 
-
-  scope :with_occupancy,
-        lambda { |occupancy|
-          range = occupancy.split(',')
-          where('rooms.occupancy >= ? AND rooms.occupancy <= ?', range[0], range[1])
-        }
+  scope :with_occupancy, -> (occupancy) {
+    range = occupancy.split(',')
+    where('rooms.occupancy >= ? AND rooms.occupancy <= ?', range[0], range[1])
+  }
 
 end

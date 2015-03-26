@@ -1,4 +1,4 @@
-= form_for_filterrific @filterrific do |f|
+= form_for_filterrific @filterrific, html: {id: 'filterrific_filter_form'} do |f|
   = f.label :with_specification
   = f.fields_for :with_specification, @filterrific.with_specification do |element|
     - @filterrific.select_options[:with_specification].each do |specification|
@@ -6,45 +6,33 @@
       = element.label specification[0]
       = element.check_box specification[1], checked: true
   %br= f.label :with_price
-  = f.text_field :with_price, class: 'filterrific-periodically-observed span2', id: 'price-slider'
+  = f.text_field :with_price, class: 'filterrific-slider', id: 'price-slider'
   %br= f.label :with_size
-  = f.text_field :with_size,  class: 'filterrific-periodically-observed span2', id: 'size-slider'
+  = f.text_field :with_size,  class: 'filterrific-slider', id: 'size-slider'
   %br= f.label :with_occupancy
-  = f.text_field :with_occupancy,  class: 'filterrific-periodically-observed span2', id: 'occupancy-slider'
+  = f.text_field :with_occupancy,  class: 'filterrific-slider', id: 'occupancy-slider'
   %br= f.label :sort_by
-  = f.select :sort_by, @filterrific.select_options[:sort_by], class: 'form-control'
+  = f.select :sort_by, @filterrific.select_options[:sort_by]
 
 :javascript
 
-  $(document).on("ready page:load", function() {
-    priceSlider = $("#price-slider").slider(
-    {
-      min: 10,
-      max: 200,
-      range: true,
-      value: [10, 200],
-      step: 1
-    });
-    sizeSlider = $("#size-slider").slider(
-    {
-      min: 15,
-      max: 150,
-      range: true,
-      value: [15, 150],
-      step: .5
-    });
-    occupancySlider = $("#occupancy-slider").slider(
-    {
-      min: 1,
-      max: 8,
-      range: true,
-      value: [1, 8],
-      step: 1
-    });
-  })
+  priceSlider = $("#price-slider")
+    .slider({min: 10, max: 200, range: true, value: [10, 200], step: 1});
+
+  sizeSlider = $("#size-slider")
+    .slider({min: 15, max: 150, range: true, value: [15, 150], step: .5});
+
+  occupancySlider = $("#occupancy-slider")
+    .slider({min: 1, max: 8, range: true, value: [1, 8], step: 1});
+
+  $(".filterrific-slider").on('slideStop', Filterrific.submitFilterForm);
+  $("#filterrific_filter_form :input").on("change", Filterrific.submitFilterForm);
 
   $('.js-datepicker').datepicker();
   $('#overlayTrigger').click(function(event) {
     event.preventDefault();
     $('body').chardinJs('start');
   });
+
+
+
