@@ -22,4 +22,6 @@
 //= require filterrific/filterrific-jquery
 //= require chardinjs
 //= require turbolinks
+//= require moment
+//= require daterangepicker
 //= require_tree .

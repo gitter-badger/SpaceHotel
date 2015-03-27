@@ -1,38 +1,88 @@
-= form_for_filterrific @filterrific, html: {id: 'filterrific_filter_form'} do |f|
-  = f.label :with_specification
-  = f.fields_for :with_specification, @filterrific.with_specification do |element|
+#filter_fields
+  #reportrange{:style => "background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc"}
+    %i.glyphicon.glyphicon-calendar.fa.fa-calendar
+    %span
+    %b.caret
+  .specification-chooser
     - @filterrific.select_options[:with_specification].each do |specification|
-      %br
-      = element.label specification[0]
-      = element.check_box specification[1], checked: true
-  %br= f.label :with_price
-  = f.text_field :with_price, class: 'filterrific-slider', id: 'price-slider'
-  %br= f.label :with_size
-  = f.text_field :with_size,  class: 'filterrific-slider', id: 'size-slider'
-  %br= f.label :with_occupancy
-  = f.text_field :with_occupancy,  class: 'filterrific-slider', id: 'occupancy-slider'
-  %br= f.label :sort_by
-  = f.select :sort_by, @filterrific.select_options[:sort_by]
+      %br= specification[0]
+      %input{:checked=>"checked", :type=>"checkbox", :value => specification[1]}
+  .filterrific-sliders
+    %br Price
+    %input#price-slider{:type=>"text"}
+    %br Size
+    %input#size-slider{:type=>"text"}
+    %br Occupancy
+    %input#occupancy-slider{:type=>"text"}
 
-:javascript
+%br= select_tag :sort_by, options_for_select(@filterrific.select_options[:sort_by])
 
-  priceSlider = $("#price-slider")
-    .slider({min: 10, max: 200, range: true, value: [10, 200], step: 1});
-
-  sizeSlider = $("#size-slider")
-    .slider({min: 15, max: 150, range: true, value: [15, 150], step: .5});
-
-  occupancySlider = $("#occupancy-slider")
-    .slider({min: 1, max: 8, range: true, value: [1, 8], step: 1});
-
-  $(".filterrific-slider").on('slideStop', Filterrific.submitFilterForm);
-  $("#filterrific_filter_form :input").on("change", Filterrific.submitFilterForm);
-
-  $('.js-datepicker').datepicker();
-  $('#overlayTrigger').click(function(event) {
-    event.preventDefault();
-    $('body').chardinJs('start');
-  });
-
-
+-#:javascript
+-#
+-#  var priceSlider = $("#price-slider")
+-#    .slider({min: 10, max: 200, range: true, value: [10, 200], step: 1});
+-#
+-#  var sizeSlider = $("#size-slider")
+-#    .slider({min: 15, max: 150, range: true, value: [15, 150], step: .5});
+-#
+-#  var occupancySlider = $("#occupancy-slider")
+-#    .slider({min: 1, max: 8, range: true, value: [1, 8], step: 1});
+-#
+-#  var specificationChooser = $(".specification-chooser").data('ids', function() {
+-#    var ids = "";
+-#    $(".specification-chooser input").each(function() {
+-#      this.checked ? ids += $(this).val()+"," : "";
+-#    })
+-#    return ids
+-#  });
+-#
+-#  var datarangePicker = $('#reportrange').daterangepicker({
+-#      format: 'MM/DD/YYYY',
+-#      startDate: moment(),
+-#      endDate: moment().add(1, 'days'),
+-#      minDate: moment(),
+-#      maxDate: moment().add(3, 'month'),
+-#      dateLimit: { days: 60 },
+-#      showDropdowns: true,
+-#      showWeekNumbers: true,
+-#      opens: 'left',
+-#      buttonClasses: ['btn', 'btn-sm'],
+-#      applyClass: 'btn-primary',
+-#      cancelClass: 'btn-default',
+-#      separator: ' to ',
+-#  }, function(start, end, label) {
+-#      datarangePicker.data('dates', start.format('MM/DD/YYYY') + '-' + end.format('MM/DD/YYYY'));
+-#      $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+-#      filterrificRefresh();
+-#  });
+-#
+-#  $('#reportrange span').html(moment().format('MMMM D, YYYY') + ' - ' + moment().add(1, 'days').format('MMMM D, YYYY'));
+-#
+-#  var filterrificRefresh = function() {
+-#    var url = $(this).parents("form").attr("action");
+-#
+-#    $('.filterrific_spinner').show();
+-#
+-#    $.ajax({
+-#      url: url,
+-#      data: {
+-#        filterrific : {
+-#          with_specification: specificationChooser.data('ids')(),
+-#          with_date:  datarangePicker.data('dates'),
+-#          with_price: priceSlider.val(),
+-#          with_size: sizeSlider.val(),
+-#          with_occupancy: occupancySlider.val(),
+-#          sort_dy: $("#sort_by").val()
+-#        }
+-#      },
+-#      type: 'GET',
+-#      dataType: 'script'
+-#    }).done(function( msg ) {
+-#      $('.filterrific_spinner').hide();
+-#    });
+-#  }
+-#
+-#  $(".specification-chooser input, #sort_by").on('change', filterrificRefresh);
+-#  $(".filterrific-sliders input").on('slideStop', filterrificRefresh);
+-#
 

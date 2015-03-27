@@ -3,6 +3,7 @@ class Room < ActiveRecord::Base
   filterrific :default_filter_params => {sort_by: 'price_desc'},
               :available_filters => %w[
                 sort_by
+                with_date
                 with_specification
                 with_price
                 with_size
@@ -49,9 +50,13 @@ class Room < ActiveRecord::Base
     end
   }
 
+  scope :with_date, -> (dates) {
+    p dates
+    all
+  }
+
   scope :with_specification, -> (specification_ids) {
-    ids = specification_ids.marshal_dump.delete_if { |key, value| value == "0" }.keys
-    where(:specification_id => ids)
+    where(:specification_id => specification_ids.split(','))
   }
 
   scope :with_price, -> (prices) {
