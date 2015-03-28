@@ -51,27 +51,27 @@ class Room < ActiveRecord::Base
   }
 
   scope :with_date, -> (dates) {
-    p dates
-    all
+    data_range = (Date.strptime(dates.partition(',').first, '%m/%d/%Y')..Date.strptime(dates.partition(',').last, '%m/%d/%Y'))
+    where{id.not_in(Booking.where{(arrival.in data_range) | (departure.in data_range)}.select{distinct(`room_id`)})}
   }
 
   scope :with_specification, -> (specification_ids) {
-    where(:specification_id => specification_ids.split(','))
+    where(specification_id: specification_ids.split(','))
   }
 
   scope :with_price, -> (prices) {
-    range = prices.split(',')
-    where('rooms.price >= ? AND rooms.price <= ?', range[0], range[1])
+    price_range = eval(prices.gsub(',','..'))
+    where(price: price_range)
   }
 
   scope :with_size, -> (sizes) {
-    range = sizes.split(',')
-    where('rooms.size >= ? AND rooms.size <= ?', range[0], range[1])
+    size_range = eval(sizes.gsub(',','..'))
+    where(size: size_range)
   }
 
   scope :with_occupancy, -> (occupancy) {
-    range = occupancy.split(',')
-    where('rooms.occupancy >= ? AND rooms.occupancy <= ?', range[0], range[1])
+    occupancy_range = eval(occupancy.gsub(',','..'))
+    where(occupancy: occupancy_range)
   }
 
 end

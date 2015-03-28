@@ -46,7 +46,7 @@ $ ->
       cancelClass: 'btn-default'
       separator: ' to '
     }, (start, end, label) ->
-    datarangePicker.data 'dates', start.format('MM/DD/YYYY') + '-' + end.format('MM/DD/YYYY')
+    datarangePicker.data 'dates', start.format('MM/DD/YYYY') + ',' + end.format('MM/DD/YYYY')
     $('#reportrange span').html start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY')
     filterrificRefresh()
   )

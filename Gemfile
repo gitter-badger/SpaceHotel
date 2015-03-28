@@ -28,6 +28,7 @@ gem 'bootstrap-slider-rails'
 gem 'jquery-turbolinks'
 gem 'momentjs-rails'
 gem 'bootstrap-daterangepicker-rails'
+gem 'squeel'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
